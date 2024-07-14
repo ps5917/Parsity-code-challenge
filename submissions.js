@@ -1,12 +1,14 @@
-const findSum = function(array) {
-};
+// Question 1
 // Function to find the sum of all numbers in an array
+const findSum = function(array) {
     // Return a value of the sum of all array item values using .reduce
-  return array.reduce(
-      (a,c) => a+c, 0
-  );
+    return array.reduce(
+        (a,c) => a+c, 0
+    );
 };
 
+// Question 2
+// Function to find the most and least frequent items in an array
 const findFrequency = function(array) {
     let counts = {}
 
@@ -17,7 +19,7 @@ const findFrequency = function(array) {
             counts[letter] = 1;
         }
     });
-    // Now find the most and least frequent
+// Now find the most and least frequent
     let most = array[0]
     let least = array[0]
 
@@ -32,6 +34,9 @@ const findFrequency = function(array) {
     return {most, least}
 };
 
+
+// Question 3
+// Function to check if a string is a palindrome
 const isPalindrome = function(str) {
     // Convert original string to lowercase
     str = str.toLowerCase()
@@ -43,6 +48,8 @@ const isPalindrome = function(str) {
     return str === reversedStr;
 };
 
+// Question 4
+// Function to find the largest product of adjacent elements in an array
 const largestPair = function(array) {
     return array.reduce((max, curr, i) => {
         if (i > 0 && curr * array[i - 1] > max) {
@@ -52,64 +59,29 @@ const largestPair = function(array) {
     }, 0);
 };
 
-const removeParenth = function(str) {
+// Question 5
+// Function to remove text within parentheses from a string
+const removeParenth = function(sentence) {
     // Remove the content inside parentheses
     let newSentence = sentence.replace(/\([^)]*\)/g, '');
 
     return newSentence;
 };
 
+// Question 6
+// Function to convert letter and score data set string into object containing letter and corresponding score (int) pairs 
 const scoreScrabble = function(str) {
-function convertToLetterScoring(data) {
-    // Use reduce to iterate over each line and build our letter scoring object
-    return data.trim().split('\n').reduce((letterScoring, line) => {
-        // Destructure the line into score and letters
-        // The split('-') creates an array with two elements: the score and the letters string
-        const [score, letters] = line.split('-');
+    const letterValues = {
+        'A': 1, 'E': 1, 'I': 1, 'O': 1, 'U': 1, 'L': 1, 'N': 1, 'R': 1, 'S': 1, 'T': 1,
+        'D': 2, 'G': 2,
+        'B': 3, 'C': 3, 'M': 3, 'P': 3,
+        'F': 4, 'H': 4, 'V': 4, 'W': 4, 'Y': 4,
+        'K': 5,
+        'J': 8, 'X': 8,
+        'Q': 10, 'Z': 10
+    };
 
-        // Convert score to number and trim whitespace
-        const scoreValue = parseInt(score.trim());
-    
-        // Split letters, trim whitespace, and convert to uppercase
-        letters.split(',').forEach(letter => {
-            // Trim whitespace, convert to uppercase, and add to our scoring object
-            // This ensures consistency in our keys (all uppercase, no whitespace)
-            letterScoring[letter.trim().toUpperCase()] = scoreValue;
-        });
-    
-        // Return the updated letterScoring object for the next iteration
-        return letterScoring;
-    }, {}); // Initialize with an empty object
-}
-
-// Input data: multiline string (letter scoring data) where each line represents a score and its corresponding letters
-const scoringData = `
-1 - a, e, i, o, u, l, n, r, s, t
-2 - d, g
-3 - b, c, m, p
-4 - f, h, v, w, y
-5 - k
-8 - j, x
-10 - q, z
-`;
-
-// Execute our function with the input data
-const letterScoring = convertToLetterScoring(scoringData);
-
-// Function to calculate Scrabble score for a word
-const scoreScrabble = function(str) {
-    // Initialize total score for this word
-    let totalScore = 0;
-    
-    // Convert each character to upper case to match scoring data letters
-    for (const char of str.toUpperCase()){
-        // Look up the score for the character, default to 0 if not found
-        const charScore = letterScoring[char] || 0;
-
-        // Add the character's score to the total
-        totalScore += charScore;
-    }
-
-    // Return the final score for the word
-    return totalScore;     
+    return str.toUpperCase().split('').reduce((score, char) => {
+        return score + (letterValues[char] || 0);
+    }, 0);
 };
